@@ -20,11 +20,23 @@ class App extends React.Component {
     this.state = {notes: [...notes]};
   }
 
+  addNote = () => {
+    this.setState({
+      notes: [
+        ...this.state.notes,
+        {
+          id: uuid.v4(),
+          task: 'New task'
+        }
+      ]
+    });
+  };
+
   render() {
     const {notes} = this.state;
     return (
       <div>
-        <button onClick={() => console.log('add note')}>+</button>
+        <button onClick={this.addNote}>+</button>
         <Notes notes={notes} />
       </div>
     );
