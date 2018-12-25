@@ -1,12 +1,12 @@
 import React from 'react';
 import Note from './Note';
 
-const Notes = ({notes}) => {
+const Notes = ({notes, onDelete = () => {}}) => {
   return (
     <ul>
-      {notes.map(note => (
-        <li key={note.id}>
-          <Note task={note.task} />
+      {notes.map(({id, task}) => (
+        <li key={id}>
+          <Note onDelete={onDelete.bind(null, id)} task={task} />
         </li>
       ))}
     </ul>
