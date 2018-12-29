@@ -20,6 +20,17 @@ class App extends React.Component {
     this.state = {notes: [...notes]};
   }
 
+  activateNoteEdit = id => {
+    this.setState({
+      notes: this.state.notes.map(note => {
+        if (note.id === id) {
+          note.editing = true;
+        }
+        return note;
+      })
+    });
+  };
+
   addNote = () => {
     this.setState({
       notes: [
@@ -39,12 +50,31 @@ class App extends React.Component {
     });
   };
 
+  editNote = (id, task) => {
+    this.setState({
+      notes: this.state.notes.map(note => {
+        if (note.id === id) {
+          note.editing = false;
+          note.task = task;
+        }
+        return note;
+      })
+    });
+  };
+
   render() {
     const {notes} = this.state;
     return (
       <div>
-        <button onClick={this.addNote}>+</button>
-        <Notes notes={notes} onDelete={this.deleteNote} />
+        <button className="add-note" onClick={this.addNote}>
+          +
+        </button>
+        <Notes
+          notes={notes}
+          onNoteClick={this.activateNoteEdit}
+          onEdit={this.editNote}
+          onDelete={this.deleteNote}
+        />
       </div>
     );
   }
