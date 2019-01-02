@@ -1,6 +1,7 @@
 import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
+import connect from '../libs/connect';
 
 const notes = [
   {
@@ -80,4 +81,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(() => ({test: 'test'}))(App);
