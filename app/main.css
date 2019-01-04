@@ -45,6 +45,6 @@ body {
   visibility: hidden;
 }
 
-.note:hover {
+.note:hover .delete {
   visibility: visible;
 }

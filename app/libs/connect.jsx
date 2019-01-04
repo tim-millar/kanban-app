@@ -15,8 +15,6 @@ const connecter = (state, actions) => {
   return target => props => <target {...Object.assign({}, props, actions)} />;
 };
 
-export default connecter;
-
 function connect(state = () => {}, actions = {}, target) {
   class Connect extends React.Component {
     componentDidMount() {
@@ -59,3 +57,5 @@ function composeStores(stores) {
   });
   return ret;
 }
+
+export default connecter;
