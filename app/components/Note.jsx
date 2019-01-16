@@ -8,6 +8,8 @@ class Note extends React.Component {
     const {
       connectDragSource,
       connectDropTarget,
+      onMove,
+      id,
       children,
       ...restProps
     } = this.props;
@@ -20,15 +22,20 @@ class Note extends React.Component {
 
 const noteSource = {
   beginDrag(props) {
-    console.log('begin drag note', props);
-    return {};
+    return {
+      id: props.id
+    };
   }
 };
 
 const noteTarget = {
   hover(targetProps, monitor) {
+    const targetId = targetProps.id;
     const sourceProps = monitor.getItem();
-    console.log('dragging note', sourceProps, targetProps);
+    const sourceId = sourceProps.id;
+    if (sourceId !== targetId) {
+      targetProps.onMove({sourceId, targetId});
+    }
   }
 };
 
