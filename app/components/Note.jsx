@@ -8,15 +8,23 @@ class Note extends React.Component {
     const {
       connectDragSource,
       connectDropTarget,
+      isDragging,
+      isOver,
       onMove,
       id,
+      editing,
       children,
       ...restProps
     } = this.props;
+    const dragSource = editing ? a => a : connectDragSource;
     return compose(
-      connectDragSource,
+      dragSource,
       connectDropTarget
-    )(<div {...restProps}>{children}</div>);
+    )(
+      <div style={{opacity: isDragging || isOver ? 0 : 1}} {...restProps}>
+        {children}
+      </div>
+    );
   }
 }
 
@@ -40,10 +48,12 @@ const noteTarget = {
 };
 
 export default compose(
-  DragSource(ItemTypes.NOTE, noteSource, connect => ({
-    connectDragSource: connect.dragSource()
+  DragSource(ItemTypes.NOTE, noteSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
   })),
-  DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
-    connectDropTarget: connect.dropTarget()
+  DropTarget(ItemTypes.NOTE, noteTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   }))
 )(Note);

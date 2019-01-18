@@ -16,6 +16,7 @@ const Notes = ({
           <Note
             className="note"
             id={id}
+            editing={editing}
             onClick={onNoteClick.bind(null, id)}
             onMove={LaneActions.move}
           >
